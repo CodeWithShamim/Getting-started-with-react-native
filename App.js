@@ -8,6 +8,7 @@ import {
   Alert,
   ScrollView,
   ActivityIndicator,
+  TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Countries from "./components/Countries";
@@ -15,6 +16,7 @@ import Countries from "./components/Countries";
 export default function App() {
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [searched, setSearched] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -26,9 +28,18 @@ export default function App() {
       });
   }, []);
 
+  const onChangeText = (text) => {
+    setLoading(true);
+    const filtered = countries.filter((country) =>
+      country.name.common.includes(text)
+    );
+    setSearched(filtered);
+    setLoading(false);
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Welcome to CF Country Hunter</Text>
+      <Text style={styles.heading}>Welcome to DG</Text>
       <StatusBar style="auto" />
       <Image
         source={{
@@ -44,10 +55,18 @@ export default function App() {
         accessibilityLabel="Learn more about this purple button"
       />
 
+      {/* search field  */}
+      {!loading && (
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeText}
+          placeholder="Seach country"
+        />
+      )}
       {/* _____________ */}
       <ScrollView style={{ marginTop: 50 }}>
-        {countries?.map((country) => (
-          <Countries key={country.id} country={country}></Countries>
+        {searched?.map((country, index) => (
+          <Countries key={index} country={country}></Countries>
         ))}
         {loading && <ActivityIndicator size="large" color="#00ff00" />}
       </ScrollView>
@@ -58,16 +77,24 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#F3F6FB",
     alignItems: "center",
     justifyContent: "center",
   },
   heading: {
+    textAlign: "center",
+    width: 1000,
     marginBottom: 10,
     color: "white",
     fontWeight: "bold",
     fontSize: 30,
     padding: 20,
     backgroundColor: "black",
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
   },
 });
