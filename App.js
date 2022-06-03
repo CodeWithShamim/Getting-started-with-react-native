@@ -39,7 +39,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Welcome to DG</Text>
+      <Text style={styles.heading}>Welcome to DGdddd</Text>
       <StatusBar style="auto" />
       <Image
         source={{
@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     width: 1000,
     marginBottom: 10,
+    marginTop: 40,
     color: "white",
     fontWeight: "bold",
     fontSize: 30,
